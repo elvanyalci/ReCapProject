@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -16,9 +17,10 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new Result();
         }
         public List<Car> GetAll()
         {
@@ -50,16 +52,24 @@ namespace Business.Concrete
             return _carDal.GetCarDetail();
         }
 
-        public void Insert(Car car)
+        public IResult Insert(Car car)
         {
+            if (car.Description.Length < 2)
+            {
+                return new ErrorResult("araba ismi 2 karakterden düşük olmamalıdır")
+            }
              _carDal.Add(car);
-            _carDal.GetAll();
+            //_carDal.GetAll();
+            //return new Result(true,"ürün eklendi");
+            return new SuccessResult("ürün eklendi");
+
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             _carDal.Update(car);
-           
+            return new Result();
+
         }
     }
 }
