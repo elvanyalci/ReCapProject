@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,55 +21,63 @@ namespace Business.Concrete
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new Result();
+            return new SuccessResult(Messages.CarDeleted);
         }
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(),Messages.CarListed);
             
         }
-        public List<Car> GetByBrandId(int brandId)
+        public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetByColorId(int colorId)
+        public IDataResult<List<Car>> GetByColorId(int colorId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetByDailyPrice()
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min,decimal max)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max));
         }
 
-        public Car GetById(int carId)
+        public IDataResult<Car> GetById(int carId)
         {
-            return _carDal.Get(c => c.Id == carId);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetail();
+            if (DateTime.Now.Hour == 3)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
         }
 
         public IResult Insert(Car car)
         {
             if (car.Description.Length < 2)
             {
-                return new ErrorResult("araba ismi 2 karakterden düşük olmamalıdır")
+                return new ErrorResult(Messages.ProductNameInvalid);
             }
              _carDal.Add(car);
             //_carDal.GetAll();
             //return new Result(true,"ürün eklendi");
-            return new SuccessResult("ürün eklendi");
+            return new SuccessResult(Messages.CarAdded);
 
         }
 
         public IResult Update(Car car)
         {
             _carDal.Update(car);
-            return new Result();
+            return new SuccessResult(Messages.CarUpdated);
 
         }
     }
