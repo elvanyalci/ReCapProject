@@ -43,8 +43,7 @@ namespace Business.Concrete
             }
             else //araba daha önce kiralamışsa
             {
-                if ((_rentalDal.Get(p => p.CarId == rental.CarId).ReturnDate) != null
-                    &&_rentalDal.Get(p=>p.CustomerId==rental.CustomerId)!=null)//araba daha önce kiralanmış ama geri verilmiş
+                if ((_rentalDal.Get(p => p.CarId == rental.CarId).ReturnDate) != null)//araba daha önce kiralanmış ama geri verilmiş
                 {
                     _rentalDal.Add(rental);
                     return new SuccessResult(Messages.SuccessInserted);
