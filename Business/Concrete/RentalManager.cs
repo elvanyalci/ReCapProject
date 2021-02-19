@@ -43,16 +43,19 @@ namespace Business.Concrete
             }
             else //araba daha önce kiralamışsa
             {
-                if ((_rentalDal.Get(p => p.CarId == rental.CarId).ReturnDate) != null)//araba daha önce kiralanmış ama geri verilmiş
+                foreach (var rentalList in _rentalDal.GetAll())
                 {
-                    _rentalDal.Add(rental);
-                    return new SuccessResult(Messages.SuccessInserted);
+                    if (rentalList.CarId == rental.CarId)//arabanın kiralama listesini alıyoruz
+                    {
+                        if (rentalList.ReturnDate != null)//araba daha önce kiralanmış ama geri verilmiş olan
+                        {
+                            _rentalDal.Add(rental);
+                            return new SuccessResult(Messages.SuccessInserted);
+                        }
+                    }
                 }
-                else//kiralanmış ama geri verilmemiş
-                {
-                    return new ErrorResult(Messages.ErrorInserted);
-                }
-               
+                 //kiralanmış ama geri verilmemiş                
+                return new ErrorResult(Messages.ErrorInserted);
             }
             
         }
