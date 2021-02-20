@@ -35,7 +35,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>( _brandDal.Get(p => p.Id == brandId),Messages.BrandAdded);
         }
 
-        public IResult Insert(Brand brand)
+        public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);

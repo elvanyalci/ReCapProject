@@ -28,19 +28,19 @@ namespace Business.Constants
         public static string BrandListed="Markalar listelendi";
 
         public static string UserDeleted = "kullanıcı silindi";
-        public static string UserInserted = "kullanıcı eklendi";
+        public static string UserAdded = "kullanıcı eklendi";
         public static string UserUpdated = "kullanıcı güncellendi";
         public static string UserListed = "kullanıcılar listelendi";
 
         public static string CustomerDeleted="Müşteri silindi";
-        public static string CustomerInserted="Müşteri eklendi";
+        public static string CustomerAdded="Müşteri eklendi";
         public static string CustomerUpdated="müşteri güncellendi";
         public static string CustomerListed="Müşteriler listelendi";
 
         public static string SuccessDeleted="kiralama kaydı silindi";
-        public static string SuccessInserted="kiralama kaydı eklendi";
+        public static string SuccessAdded="kiralama kaydı eklendi";
         public static string SuccessUpdated="kiralama kaydı güncellendi";
 
-        internal static string ErrorInserted="Araç kirada,teslim edilmemiş";
+        internal static string ErrorAdded="Araç kirada,teslim edilmemiş";
     }
 }

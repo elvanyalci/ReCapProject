@@ -34,12 +34,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(p=>p.Id==rentalId));
         }
 
-        public IResult Insert(Rental rental)
+        public IResult Add(Rental rental)
         {
             if ((_rentalDal.Get(p=>p.CarId==rental.CarId))==null)//araba kiralanmamşısa
             {
                 _rentalDal.Add(rental);
-                return new SuccessResult(Messages.SuccessInserted);
+                return new SuccessResult(Messages.SuccessAdded);
             }
             else //araba daha önce kiralamışsa
             {
@@ -50,12 +50,12 @@ namespace Business.Concrete
                         if (rentalList.ReturnDate != null)//araba daha önce kiralanmış ama geri verilmiş olan
                         {
                             _rentalDal.Add(rental);
-                            return new SuccessResult(Messages.SuccessInserted);
+                            return new SuccessResult(Messages.SuccessAdded);
                         }
                     }
                 }
                  //kiralanmış ama geri verilmemiş                
-                return new ErrorResult(Messages.ErrorInserted);
+                return new ErrorResult(Messages.ErrorAdded);
             }
             
         }

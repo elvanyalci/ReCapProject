@@ -36,10 +36,10 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userdal.Get(p => p.Id == userId));
         }
 
-        public IResult Insert(User user)
+        public IResult Add(User user)
         {
             _userdal.Add(user);
-            return new SuccessResult(Messages.UserInserted);
+            return new SuccessResult(Messages.UserAdded);
         }
 
         public IResult Update(User user)
